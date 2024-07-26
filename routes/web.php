@@ -19,19 +19,9 @@ use App\Http\Controllers\InvoiceController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-
 
 Route::middleware(['auth', 'verified'])->group(function () {
-
+    Route::get('/', [ServiceController::class, 'index'])->name('home');
     Route::resource('services', ServiceController::class);
     Route::get('services/start-repair/{id}', [ServiceController::class, 'startRepair'])->name('services.startRepair');
     
